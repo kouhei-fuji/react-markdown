@@ -3,6 +3,7 @@
 const React = require('react')
 const xtend = require('xtend')
 const ReactIs = require('react-is')
+const humps = require('humps')
 
 const defaultNodePosition = {
   start: {line: 1, column: 1, offset: 0},
@@ -63,6 +64,37 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
   if (opts.includeNodeIndex && parent.node && parent.node.children && !isTagRenderer) {
     props.index = parent.node.children.indexOf(node)
     props.parentChildCount = parent.node.children.length
+  }
+
+  if (node.data && node.data.hProperties) {
+    Object.assign(
+      props,
+      Object.keys(node.data.hProperties).reduce((o, key) => {
+        const val = node.data.hProperties[key]
+        if (key === 'class') {
+          return {...o, className: Array.isArray(val) ? val.join(' ') : val}
+        }
+        if (key === 'style') {
+          return {
+            ...o,
+            [key]:
+              typeof val === 'string'
+                ? val
+                    .split(';')
+                    .filter(Boolean)
+                    .reduce((sObj, v) => {
+                      const [sKey, sVal, ...sOther] = v.split(':')
+                      if (!(sKey && sVal && sOther.length === 0)) {
+                        return sObj
+                      }
+                      return {...sObj, [humps.camelize(sKey)]: sVal.trim()}
+                    }, {})
+                : val,
+          }
+        }
+        return o
+      }, {})
+    )
   }
 
   const ref =

@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "html-to-react": "^1.3.4",
+    "humps": "^2.0.1",
     "mdast-add-list-metadata": "1.0.1",
     "prop-types": "^15.7.2",
     "react-is": "^16.8.6",
