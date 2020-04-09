@@ -2,11 +2,11 @@
 
 const React = require('react')
 const xtend = require('xtend')
-const ReactIs = require('react-is');
+const ReactIs = require('react-is')
 
 const defaultNodePosition = {
   start: {line: 1, column: 1, offset: 0},
-  end: {line: 1, column: 1, offset: 0}
+  end: {line: 1, column: 1, offset: 0},
 }
 
 function astToReact(node, options, parent = {}, index = 0) {
@@ -115,7 +115,7 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
             : opts.linkTarget,
         href: opts.transformLinkUri
           ? opts.transformLinkUri(node.url, node.children, node.title)
-          : node.url
+          : node.url,
       })
       break
     case 'image':
@@ -124,14 +124,14 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
         title: node.title || undefined,
         src: opts.transformImageUri
           ? opts.transformImageUri(node.url, node.children, node.title, node.alt)
-          : node.url
+          : node.url,
       })
       break
     case 'linkReference':
       assignDefined(
         props,
         xtend(ref, {
-          href: opts.transformLinkUri ? opts.transformLinkUri(ref.href) : ref.href
+          href: opts.transformLinkUri ? opts.transformLinkUri(ref.href) : ref.href,
         })
       )
       break
@@ -142,7 +142,7 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
             ? opts.transformImageUri(ref.href, node.children, ref.title, node.alt)
             : ref.href,
         title: ref.title || undefined,
-        alt: node.alt || undefined
+        alt: node.alt || undefined,
       })
       break
     case 'table':
@@ -157,7 +157,7 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
     case 'tableCell':
       assignDefined(props, {
         isHeader: parent.props.isHeader,
-        align: parent.props.columnAlignment[index]
+        align: parent.props.columnAlignment[index],
       })
       break
     case 'virtualHtml':
@@ -185,7 +185,7 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
         xtend(node, {
           type: undefined,
           position: undefined,
-          children: undefined
+          children: undefined,
         })
       )
   }
