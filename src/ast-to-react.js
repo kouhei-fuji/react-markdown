@@ -149,6 +149,9 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
           ? opts.transformLinkUri(node.url, node.children, node.title)
           : node.url,
       })
+      if (props.target) {
+        assignDefined(props, {rel: 'noopener noreferrer'})
+      }
       break
     case 'image':
       assignDefined(props, {
